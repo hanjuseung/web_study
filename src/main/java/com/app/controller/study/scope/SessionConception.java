@@ -25,6 +25,14 @@ public class SessionConception {
 		SessionStorage session = sessionMap.get("11AA"); // value : SessionStorage
 		session.setAttribute("fromBMsg", "fromB");
 		session.setAttribute("msg", "hi hello");
+		
+		//또 다른 사용자 접근 -> 22BB
+		
+		sessionMap.put("22BB", new SessionStorage()); //22BB 세션에 대한 저장공간
+		
+		session = sessionMap.get("11AA");
+		
+		session = sessionMap.get("22BB");
 	}
 }
 
