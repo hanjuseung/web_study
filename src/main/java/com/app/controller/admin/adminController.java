@@ -25,6 +25,7 @@ public class adminController {
 		
 		//room 정보 등록
 		int result = roomService.saveRoom(room);
+		System.out.println(result);
 		return "admin/registerRoom";
 	}
 }
