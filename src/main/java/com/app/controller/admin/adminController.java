@@ -14,7 +14,7 @@ import com.app.service.room.RoomService;
 import com.app.service.user.UserService;
 
 @Controller
-public class adminController {
+public class AdminController {
 	@Autowired
 	RoomService roomService;
 	
@@ -71,8 +71,12 @@ public class adminController {
 //		user.setUserType("CUS");
 //		int result = userService.saveUser(user);
 		int result = userService.saveCustomerUser(user);
-		System.out.println(result);
-		return "admin/addUser";
+		
+		if(result > 0 ) {
+			return "redirect:/admin/users";
+		} else {
+			return "admin/addUser";
+		}
 		
 	}
 	
