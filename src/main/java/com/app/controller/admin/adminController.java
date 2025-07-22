@@ -9,12 +9,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.app.dto.room.Room;
+import com.app.dto.user.User;
 import com.app.service.room.RoomService;
+import com.app.service.user.UserService;
 
 @Controller
 public class adminController {
 	@Autowired
 	RoomService roomService;
+	
+	@Autowired
+	UserService userService;
 
 	@GetMapping("/admin/registerRoom")
 	public String registerRoom() {
@@ -49,5 +54,25 @@ public class adminController {
 		model.addAttribute("roomList", roomList);
 		
 		return "admin/rooms";
+	}
+	
+	//관리자가 사용자 계정 관리 -> 사용자 계정을 추가
+	@GetMapping("/admin/users/add")
+	public String addUser() {
+		//화면연결
+		return "admin/addUser";
+	}
+	
+	@PostMapping("/admin/users/add")
+	public String addUserAction(User user) {
+		
+//		System.out.println(user);
+//		
+//		user.setUserType("CUS");
+//		int result = userService.saveUser(user);
+		int result = userService.saveCustomerUser(user);
+		System.out.println(result);
+		return "admin/addUser";
+		
 	}
 }
