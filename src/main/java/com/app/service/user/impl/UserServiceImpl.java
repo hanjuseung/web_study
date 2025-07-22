@@ -1,5 +1,7 @@
 package com.app.service.user.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,5 +37,14 @@ public class UserServiceImpl implements UserService{
 		user.setUserType("CUS");
 		int result = userDAO.saveUser(user);
 		return result;
+	}
+	
+	@Override
+	public List<User> findUserList(){
+		
+		// DAO 를 활용해서, 실제 데이터 가져오기
+		List<User> userList = userDAO.findUserList();
+		
+		return userList;
 	}
 }

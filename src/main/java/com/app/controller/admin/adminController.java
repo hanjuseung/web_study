@@ -75,4 +75,18 @@ public class adminController {
 		return "admin/addUser";
 		
 	}
+	
+	
+	// 사용자 리스트 보여주기
+	@GetMapping("/admin/users")
+	public String users(Model model) {
+		
+		//rooms 페이지에 보여줄 정보
+		// DB 에서 조회
+		List <User> userList = userService.findUserList();
+		
+		model.addAttribute("userList", userList);
+		
+		return "admin/users";
+	}
 }
