@@ -59,19 +59,28 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public User checkUserLogin(User user) {
+		//매개변수로 들어온 User객체에 id pw userType 로그인을 처리할 수 있는 정상적인 값을 가지고 있는지 여부 체크
+		//메소드 주요 로직 -> 로그인 처리 성공? 실패?
+		
 		// id pw 일치하는가?
 		
-		//사용자 정보를 조회해서, id pw 맞나 확인
-		User loginUser = userDAO.findUserById(user.getId());
+		// 케이스 1) DB에서 정보를 조회 한 후 -> Service Layer 상태에서 비교하는 로직을 수행!
 		
-		if(loginUser !=null && loginUser.getPw().equals(user.getPw())
-					&& loginUser.getUserType().equals(user.getUserType())) {
-			return loginUser;
-		}
+		//사용자 정보를 조회해서, id pw 맞나 확인
+		
+//		User loginUser = userDAO.findUserById(user.getId());
+		
+//		if(loginUser !=null && loginUser.getPw().equals(user.getPw())
+//					&& loginUser.getUserType().equals(user.getUserType())) {
+//			return loginUser;
+//		}
+		
 		//checkUserLogin 메소드 호출 -> return null? id pw 틀렸다
 		// return user 객체? -> 맞다
 		
-		return null;
+//		return null;
+	
+		
 		
 		/*
 			return 의미가 담긴 코드 (SUC, FAL, LCK)...
@@ -79,6 +88,12 @@ public class UserServiceImpl implements UserService{
 							  4:신고로 잠겼다 5: 휴면계정 6:...
 		 
 		 */
+		// 케이스 2) DB에서 쿼리를 통해, 정상여부 체크 로직 수행
+		// userDAO.checkUserLogin -> sql query 상에서 id, pw, userType 동일한 경우를 체크
+		User loginUser = userDAO.checkUserLogin(user);
+		
+		return loginUser;
+		
 	}
 
 }
