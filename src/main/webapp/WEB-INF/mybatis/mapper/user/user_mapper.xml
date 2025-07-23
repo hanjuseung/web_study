@@ -6,7 +6,7 @@
 <mapper namespace="user_mapper">
 	<insert id="saveUser" parameterType="User">
 		 INSERT INTO T_USER
- 		 VALUES (#{id}, null, #{name}, #{userType})
+ 		 VALUES (#{id}, #{pw}, #{name}, #{userType})
 	</insert>
 	
 	<select id="findUserList" resultType="User">

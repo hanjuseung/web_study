@@ -1,12 +1,14 @@
 package com.app.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class HomeController {
 
-	@RequestMapping("/")
+//	@RequsetMapping("/")
 	public String home() {
 
 //return "/WEB-INF/views/home.jsp";
@@ -14,6 +16,8 @@ public class HomeController {
 
 //--ViewResolver 설정 이후
 //		return "mainpage";
+		
+		
 		return "home";
 	}
 }
