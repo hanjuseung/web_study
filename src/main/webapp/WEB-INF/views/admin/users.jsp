@@ -10,13 +10,17 @@
 <body>
 	<h1>관리자 페이지</h1>
 	<h2>사용자 목록 조회</h2>
-	
+
+
 	<c:forEach var="user" items="${userList}">
-		<p>${user.id} ${user.pw} ${user.name} ${user.userType}</p>
-		<c:choose>
-			<c:when test="${user.userType == 'CUS' }">사용자</c:when>
-			<c:when test="${user.userType == 'ADM' }">관리자</c:when>
-		</c:choose>
+		<p>
+			<a href="/admin/user/${user.id}">
+				${user.id} ${user.pw} ${user.name}
+				<c:if test="${user.userType == 'ADM'}">관리자</c:if>
+				<c:if test="${user.userType == 'CUS'}">사용자</c:if>
+			</a>
+		</p>
+
 	</c:forEach>
-</body>
-</html>
+
+</body></html>
