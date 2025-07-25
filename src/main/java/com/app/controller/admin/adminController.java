@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.app.dto.room.Room;
+import com.app.dto.room.RoomSearchCondition;
 import com.app.dto.user.User;
 import com.app.dto.user.UserSearchCondition;
 import com.app.service.room.RoomService;
@@ -49,13 +50,16 @@ public class AdminController {
 	//관리자가 객실 관리하면서 객실 목록 확인
 	
 	@GetMapping("/admin/rooms")
-	public String rooms(Model model) {
+	public String rooms(Model model,RoomSearchCondition roomSearchCondition) {
 		
 		//rooms 페이지에 보여줄 정보
 		// DB 에서 조회
-		List <Room> roomList = roomService.findRoomList();
+//		List <Room> roomList = roomService.findRoomList();
+		
+		List <Room> roomList = roomService.findRoomListBySearchCondition(roomSearchCondition);
 		
 		model.addAttribute("roomList", roomList);
+		model.addAttribute("roomSearchCondition", roomSearchCondition);
 		
 		return "admin/rooms";
 	}
@@ -189,7 +193,6 @@ public class AdminController {
 		} else {  // 실패 : 다시 수정하는 페이지
 			return "redirect:/admin/modifyUser/" + user.getId();
 		}
-		
-		
 	}
+	
 }
