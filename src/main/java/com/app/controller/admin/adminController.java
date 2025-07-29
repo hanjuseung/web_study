@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,8 +20,12 @@ import com.app.dto.user.UserSearchCondition;
 import com.app.service.room.RoomService;
 import com.app.service.user.UserService;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Controller
 public class AdminController {
+//	private static final Logger log = LogManager.getLogger(AdminController.class);
 	@Autowired
 	RoomService roomService;
 	
@@ -28,11 +34,24 @@ public class AdminController {
 
 	@GetMapping("/admin/registerRoom")
 	public String registerRoom() {
+		
+		System.out.println("이것은 println");
+		log.info("이것은 log.info 레벨 기록");
+		
+		log.error("로그 log error 기록");
+		log.warn("이것은 경고 warning");
+		log.debug("debug level 로그");
+		log.trace("trace level 로그");
+		
+		log.info("집에 들어갔다");
+		log.info("손을 씻었다");
+		log.info("침대에 누웠다");
+		
 		return "admin/registerRoom";
 	}
 	
 	@PostMapping("/admin/registerRoom")
-	public String registerRoom(Room room) {
+	public String registerRoomAction(Room room) {
 		//값이 잘 넘어왔는가
 		System.out.println(room.toString());
 		
@@ -41,6 +60,7 @@ public class AdminController {
 		System.out.println(result);
 		
 		if(result > 0 ) { //정상적으로 저장됨
+			log.info("registerRoom saveRoom 정보 저장 : {}",room);
 			return "redirect:rooms";
 		} else { // 저장 실패
 			return "admin/registerRoom";
