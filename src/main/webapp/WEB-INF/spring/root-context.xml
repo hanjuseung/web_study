@@ -8,17 +8,19 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
 http://www.springframework.org/schema/beans/spring-beans.xsd
 http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd
-http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd
-http://www.springframework.org/schema/context
-http://www.springframework.org/schema/context/spring-context.xsd">
+             http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd
+              http://www.springframework.org/schema/context
+             http://www.springframework.org/schema/context/spring-context.xsd">
 
 	<!-- ioc 컨테이너에 빈 등록 -->
-
 	<!-- roomDAO 빈 등록 -->
-	<!-- RoomDAO roomDAO = new RoomDAO() -->
-	<!-- <bean id="roomDAO" class="com.app.dao.room.impl.RoomDAOImpl"> </bean> -->
+
+	<!-- RoomDAO roomDAO = new RoomDAOImpl() -->
+	<!-- <bean id="roomDAO" class="com.app.dao.room.impl.RoomDAOImpl"> -->
+	<!-- </bean> -->
 
 	<!-- RoomService 등록 -->
+
 	<!-- RoomService roomService = new RoomServiceImpl() -->
 	<!-- <bean id="roomService" class="com.app.service.room.impl.RoomServiceImpl"> -->
 	<!-- 생성자를 통한 의존성 주입 -->
@@ -26,8 +28,9 @@ http://www.springframework.org/schema/context/spring-context.xsd">
 	<!-- <constructor-arg ref="roomDAO"></constructor-arg> -->
 
 	<!-- setter 메소드를 통한 의존성 주입 -->
-	<!-- RommService room -->
-	<!-- <property name="roomDAO" ref="roomDAO"></property> </bean> -->
+	<!-- RoomService roomService = new RoomServiceImpl(); roomService.setRoomDAO(roomDAO); -->
+	<!-- <property name="roomDAO" ref="roomDAO"></property> -->
+	<!-- </bean> -->
 
 	<bean class="org.apache.commons.dbcp2.BasicDataSource"
 		id="data_source">
@@ -54,13 +57,18 @@ http://www.springframework.org/schema/context/spring-context.xsd">
 		<constructor-arg name="sqlSessionFactory"
 			ref="sqlSessionFactory" />
 	</bean>
-	<context:component-scan base-package="com.app.service"></context:component-scan>
-	<context:component-scan base-package="com.app.dao"></context:component-scan>
 
-	<bean id="sampleScheduler" class="com.app.scheduler.DailySalesScheduler" />
-		<task:scheduler id="mainScheduler" pool-size="10" />
-		<task:executor id="mainTaskExecutor" pool-size="10" />
-		<task:annotation-driven executor="mainTaskExecutor" scheduler="mainScheduler" />
 
+	<context:component-scan
+		base-package="com.app.service"></context:component-scan>
+	<context:component-scan
+		base-package="com.app.dao"></context:component-scan>
+
+<!-- 	<bean id="sampleScheduler" -->
+<!-- 		class="com.app.scheduler.DailySalesScheduler" /> -->
+<!-- 	<task:scheduler id="mainScheduler" pool-size="10" /> -->
+<!-- 	<task:executor id="mainTaskExecutor" pool-size="10" /> -->
+<!-- 	<task:annotation-driven -->
+<!-- 		executor="mainTaskExecutor" scheduler="mainScheduler" /> -->
 
 </beans>
