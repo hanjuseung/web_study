@@ -24,8 +24,10 @@ import com.app.dto.api.ApiResponse;
 import com.app.dto.api.ApiResponseHeader;
 import com.app.dto.user.User;
 import com.app.dto.user.UserDupCheck;
+import com.app.dto.user.UserValidError;
 import com.app.service.user.UserService;
 import com.app.util.LoginManager;
+import com.app.validator.UserCustomValidator;
 import com.app.validator.UserValidator;
 
 import lombok.extern.slf4j.Slf4j;
@@ -43,20 +45,32 @@ public class CustomerController {
 	}
 
 	@PostMapping("/customer/signup")
-	public String signupAction(@Valid @ModelAttribute User user, BindingResult br) {
+	public String signupAction(/*@Valid*/ @ModelAttribute User user, BindingResult br,Model model) {
 
+		
 		//검증 결과에 문제가 있느냐 없느냐
 		
-		if(br.hasErrors()) {
-			List<ObjectError> errorList = br.getAllErrors();
-			for(ObjectError er : errorList) {
-				System.out.println(er.getObjectName());
-				System.out.println(er.getDefaultMessage());
-				System.out.println(er.getCode());
-				System.out.println(er.getCodes()[0]);
-			}
+//		if(br.hasErrors()) {
+//			List<ObjectError> errorList = br.getAllErrors();
+//			for(ObjectError er : errorList) {
+//				System.out.println(er.getObjectName());
+//				System.out.println(er.getDefaultMessage());
+//				System.out.println(er.getCode());
+//				System.out.println(er.getCodes()[0]);
+//			}
+//			
+//			//model.
+//			
+//			return "customer/signup";
+//		}
+		
+		//custom validator
+		UserValidError userValidError = new UserValidError();
+		if(UserCustomValidator.validate(user, userValidError) == false) {
+			//유효성 검증을 해봤는데, 뭔가 필드에 문제가 있다
 			
-			//model.
+			model.addAttribute("userValidError",userValidError);
+			
 			
 			return "customer/signup";
 		}
@@ -72,11 +86,11 @@ public class CustomerController {
 		}
 	}
 	
-	@InitBinder("user")
-	public void initUserBinder(WebDataBinder binder) {
-		UserValidator userValidator = new UserValidator();
-		binder.setValidator(userValidator);
-	}
+//	@InitBinder("user")
+//	public void initUserBinder(WebDataBinder binder) {
+//		UserValidator userValidator = new UserValidator();
+//		binder.setValidator(userValidator);
+//	}
 	
 	@ResponseBody
 	@PostMapping("/customer/checkDupId")
