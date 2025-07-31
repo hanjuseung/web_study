@@ -13,7 +13,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		
+		/*
 		System.out.println("여기는 인터셉터 preHandle");
 		//로그인 안했으면? 진행 X -> 로그인부터 해라~
 		if(LoginManager.isLogin(request) == false) { //로그인 안한 상태
@@ -41,6 +41,8 @@ public class LoginInterceptor implements HandlerInterceptor {
 		
 		HandlerInterceptor.super.afterCompletion(request, response, handler, ex);
 	}
-
+	*/
+		return HandlerInterceptor.super.preHandle(request, response, handler);
+	}
 	
 }

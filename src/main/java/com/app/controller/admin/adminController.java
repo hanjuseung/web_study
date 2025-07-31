@@ -148,6 +148,15 @@ public class AdminController {
 	@PostMapping("/admin/users/add")
 	public String addUserAction(User user) {
 		
+		//서버에서 Insert 처리전에 유효성 검증
+		if(user.getId() == null || user.getId().trim() == "") {
+			return "admin/addUser";
+		}
+		
+		if(user.getId().length() < 2 || user.getId().length() >15) {
+			return "admin/addUser";
+		}
+		
 //		System.out.println(user);
 //		
 //		user.setUserType("CUS");
