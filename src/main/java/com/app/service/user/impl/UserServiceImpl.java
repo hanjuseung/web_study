@@ -11,6 +11,7 @@ import com.app.dto.user.User;
 import com.app.dto.user.UserProfileImage;
 import com.app.dto.user.UserSearchCondition;
 import com.app.service.user.UserService;
+import com.app.util.SHA256Encryptor;
 
 import lombok.extern.slf4j.Slf4j;
 @Slf4j
@@ -43,6 +44,15 @@ public class UserServiceImpl implements UserService{
 
 //		user.setUserType("CUS");
 		user.setUserType(CommonCode.USER_USERTYPE_CUSTOMER);
+		
+		//비밀번호 암호화 
+		try {
+			String encPw = SHA256Encryptor.encrypt(user.getPw());
+			user.setPw(encPw);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		int result = userDAO.saveUser(user);
 		return result;
 	}
@@ -95,6 +105,13 @@ public class UserServiceImpl implements UserService{
 		 */
 		// 케이스 2) DB에서 쿼리를 통해, 정상여부 체크 로직 수행
 		// userDAO.checkUserLogin -> sql query 상에서 id, pw, userType 동일한 경우를 체크
+		
+		try {
+			String encPw = SHA256Encryptor.encrypt(user.getPw());
+			user.setPw(encPw);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		User loginUser = userDAO.checkUserLogin(user);
 		
 		return loginUser;
